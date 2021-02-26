@@ -257,16 +257,7 @@ module Ebay #:nodoc:
                   response.body
                 end
 
-      encoding = get_encoding(response)
-      content.force_encoding(encoding)
-    end
-
-    def get_encoding(response)
-      encoding = if (matched_encoding = response['Content-Type'].to_s.match(/charset=(\w.*)?/))
-        matched_encoding[1]
-      end
-
-      encoding || DEFAULT_ENCODING
+      content.force_encoding(DEFAULT_ENCODING)
     end
 
     def parse(content, format)
