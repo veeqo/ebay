@@ -29,8 +29,23 @@ module Ebay # :nodoc:
       text_node :account_entry_sort_type, 'AccountEntrySortType', :optional => true
       text_node :currency, 'Currency', :optional => true
       text_node :item_id, 'ItemID', :optional => true
+      # text_node :order_id, 'OrderID', :optional => true
+      # boolean_node :include_netted_entries, 'IncludeNettedEntries', 'true', 'false', :optional => true
     end
   end
 end
+
+# lib/ebay/types/netted_transaction_summary.rb
+
+# module Ebay
+#   module Types
+#     class NettedTransactionSummary
+#       include XML::Mapping
+#       include Initializer
+#       root_element_name 'NettedTransactionSummary'
+#       money_node :total_netted_charge_amount, 'TotalNettedChargeAmount', :optional => true
+#     end
+#   end
+# end
 
 

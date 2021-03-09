@@ -25,6 +25,8 @@ module Ebay # :nodoc:
       boolean_node :has_more_entries, 'HasMoreEntries', 'true', 'false', :optional => true
       numeric_node :entries_per_page, 'EntriesPerPage', :optional => true
       numeric_node :page_number, 'PageNumber', :optional => true
+      # text_node :order_id, 'OrderID', :optional => true
+      # object_node :netted_transaction_summary, 'NettedTransactionSummary', :class => NettedTransactionSummary, :optional => true
     end
   end
 end
