@@ -21,6 +21,7 @@ require 'ebay/types/pickup_method_selected'
 require 'ebay/types/buyer_package_enclosure'
 require 'ebay/types/gift_summary'
 require 'ebay/types/digital_delivery_selected'
+require 'ebay/types/transaction_program'
 
 module Ebay # :nodoc:
   module Types # :nodoc:
@@ -99,6 +100,7 @@ module Ebay # :nodoc:
     #  boolean_node :guaranteed_delivery, 'GuaranteedDelivery', 'true', 'false', :optional => true
     #  boolean_node :ebay_collect_and_remit_tax, 'eBayCollectAndRemitTax', 'true', 'false', :optional => true
     #  object_node :ebay_collect_and_remit_taxes, 'eBayCollectAndRemitTaxes', :class => Taxes, :optional => true
+    #  object_node :program, 'Program', :class => TransactionProgram, :optional => true
     class Transaction
       include XML::Mapping
       include Initializer
@@ -177,6 +179,7 @@ module Ebay # :nodoc:
       boolean_node :guaranteed_delivery, 'GuaranteedDelivery', 'true', 'false', :optional => true
       boolean_node :ebay_collect_and_remit_tax, 'eBayCollectAndRemitTax', 'true', 'false', :optional => true
       object_node :ebay_collect_and_remit_taxes, 'eBayCollectAndRemitTaxes', :class => Taxes, :optional => true
+      object_node :program, 'Program', :class => TransactionProgram, :optional => true
     end
   end
 end

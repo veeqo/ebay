@@ -1,6 +1,5 @@
 require 'ebay/types/fee'
 require 'ebay/types/error'
-require 'ebay/types/listing_recommendation'
 
 module Ebay # :nodoc:
   module Types # :nodoc:
@@ -15,7 +14,6 @@ module Ebay # :nodoc:
     #  array_node :errors, 'Errors', :class => Error, :default_value => []
     #  text_node :message, 'Message', :optional => true
     #  value_array_node :discount_reasons, 'DiscountReason', :default_value => []
-    #  array_node :listing_recommendations, 'ListingRecommendations', 'Recommendation', :class => ListingRecommendation, :default_value => []
     class AddItemResponseContainer
       include XML::Mapping
       include Initializer
@@ -30,7 +28,6 @@ module Ebay # :nodoc:
       array_node :errors, 'Errors', :class => Error, :default_value => []
       text_node :message, 'Message', :optional => true
       value_array_node :discount_reasons, 'DiscountReason', :default_value => []
-      array_node :listing_recommendations, 'ListingRecommendations', 'Recommendation', :class => ListingRecommendation, :default_value => []
     end
   end
 end

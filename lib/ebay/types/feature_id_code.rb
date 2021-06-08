@@ -130,6 +130,18 @@ module Ebay # :nodoc:
       AdditionalCompatibilityEnabled = 'AdditionalCompatibilityEnabled'
       PickupDropOffEnabled = 'PickupDropOffEnabled'
       DigitalGoodDeliveryEnabled = 'DigitalGoodDeliveryEnabled'
+      EpidSupported = 'EpidSupported'
+      KTypeSupported = 'KTypeSupported'
+      ProductRequiredEnabled = 'ProductRequiredEnabled'
+      DomesticReturnsAcceptedValues = 'DomesticReturnsAcceptedValues'
+      InternationalReturnsAcceptedValues = 'InternationalReturnsAcceptedValues'
+      DomesticReturnsDurationValues = 'DomesticReturnsDurationValues'
+      InternationalReturnsDurationValues = 'InternationalReturnsDurationValues'
+      DomesticReturnsShipmentPayeeValues = 'DomesticReturnsShipmentPayeeValues'
+      InternationalReturnsShipmentPayeeValues = 'InternationalReturnsShipmentPayeeValues'
+      DomesticRefundMethodValues = 'DomesticRefundMethodValues'
+      InternationalRefundMethodValues = 'InternationalRefundMethodValues'
+      ReturnPolicyDescriptionEnabled = 'ReturnPolicyDescriptionEnabled'
     end
   end
 end
