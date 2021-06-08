@@ -15,12 +15,15 @@ module Ebay # :nodoc:
     #  text_node :warranty_type, 'WarrantyType', :optional => true
     #  text_node :warranty_duration_option, 'WarrantyDurationOption', :optional => true
     #  text_node :warranty_duration, 'WarrantyDuration', :optional => true
-    #  text_node :ean, 'EAN', :optional => true
     #  text_node :shipping_cost_paid_by_option, 'ShippingCostPaidByOption', :optional => true
     #  text_node :shipping_cost_paid_by, 'ShippingCostPaidBy', :optional => true
     #  text_node :restocking_fee_value, 'RestockingFeeValue', :optional => true
     #  text_node :restocking_fee_value_option, 'RestockingFeeValueOption', :optional => true
     #  boolean_node :extended_holiday_returns, 'ExtendedHolidayReturns', 'true', 'false', :optional => true
+    #  text_node :international_refund_option, 'InternationalRefundOption', :optional => true
+    #  text_node :international_returns_accepted_option, 'InternationalReturnsAcceptedOption', :optional => true
+    #  text_node :international_returns_within_option, 'InternationalReturnsWithinOption', :optional => true
+    #  text_node :international_shipping_cost_paid_by_option, 'InternationalShippingCostPaidByOption', :optional => true
     class ReturnPolicy
       include XML::Mapping
       include Initializer
@@ -38,12 +41,15 @@ module Ebay # :nodoc:
       text_node :warranty_type, 'WarrantyType', :optional => true
       text_node :warranty_duration_option, 'WarrantyDurationOption', :optional => true
       text_node :warranty_duration, 'WarrantyDuration', :optional => true
-      text_node :ean, 'EAN', :optional => true
       text_node :shipping_cost_paid_by_option, 'ShippingCostPaidByOption', :optional => true
       text_node :shipping_cost_paid_by, 'ShippingCostPaidBy', :optional => true
       text_node :restocking_fee_value, 'RestockingFeeValue', :optional => true
       text_node :restocking_fee_value_option, 'RestockingFeeValueOption', :optional => true
       boolean_node :extended_holiday_returns, 'ExtendedHolidayReturns', 'true', 'false', :optional => true
+      text_node :international_refund_option, 'InternationalRefundOption', :optional => true
+      text_node :international_returns_accepted_option, 'InternationalReturnsAcceptedOption', :optional => true
+      text_node :international_returns_within_option, 'InternationalReturnsWithinOption', :optional => true
+      text_node :international_shipping_cost_paid_by_option, 'InternationalShippingCostPaidByOption', :optional => true
     end
   end
 end

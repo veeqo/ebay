@@ -1,6 +1,5 @@
 require 'ebay/types/fee'
 require 'ebay/types/product_suggestion'
-require 'ebay/types/listing_recommendation'
 
 module Ebay # :nodoc:
   module Responses # :nodoc:
@@ -14,7 +13,6 @@ module Ebay # :nodoc:
     #  text_node :category2_id, 'Category2ID', :optional => true
     #  value_array_node :discount_reasons, 'DiscountReason', :default_value => []
     #  array_node :product_suggestions, 'ProductSuggestions', 'ProductSuggestion', :class => ProductSuggestion, :default_value => []
-    #  array_node :listing_recommendations, 'ListingRecommendations', 'Recommendation', :class => ListingRecommendation, :default_value => []
     class ReviseFixedPriceItem < Abstract
       include XML::Mapping
       include Initializer
@@ -28,7 +26,6 @@ module Ebay # :nodoc:
       text_node :category2_id, 'Category2ID', :optional => true
       value_array_node :discount_reasons, 'DiscountReason', :default_value => []
       array_node :product_suggestions, 'ProductSuggestions', 'ProductSuggestion', :class => ProductSuggestion, :default_value => []
-      array_node :listing_recommendations, 'ListingRecommendations', 'Recommendation', :class => ListingRecommendation, :default_value => []
     end
   end
 end

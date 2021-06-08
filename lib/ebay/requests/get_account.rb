@@ -11,9 +11,11 @@ module Ebay # :nodoc:
     #  boolean_node :exclude_balance, 'ExcludeBalance', 'true', 'false', :optional => true
     #  boolean_node :exclude_summary, 'ExcludeSummary', 'true', 'false', :optional => true
     #  boolean_node :include_conversion_rate, 'IncludeConversionRate', 'true', 'false', :optional => true
+    #  boolean_node :include_netted_entries, 'IncludeNettedEntries', 'true', 'false', :optional => true
     #  text_node :account_entry_sort_type, 'AccountEntrySortType', :optional => true
     #  text_node :currency, 'Currency', :optional => true
     #  text_node :item_id, 'ItemID', :optional => true
+    #  text_node :order_id, 'OrderID', :optional => true
     class GetAccount < Abstract
       include XML::Mapping
       include Initializer
@@ -26,9 +28,11 @@ module Ebay # :nodoc:
       boolean_node :exclude_balance, 'ExcludeBalance', 'true', 'false', :optional => true
       boolean_node :exclude_summary, 'ExcludeSummary', 'true', 'false', :optional => true
       boolean_node :include_conversion_rate, 'IncludeConversionRate', 'true', 'false', :optional => true
+      boolean_node :include_netted_entries, 'IncludeNettedEntries', 'true', 'false', :optional => true
       text_node :account_entry_sort_type, 'AccountEntrySortType', :optional => true
       text_node :currency, 'Currency', :optional => true
       text_node :item_id, 'ItemID', :optional => true
+      text_node :order_id, 'OrderID', :optional => true
     end
   end
 end

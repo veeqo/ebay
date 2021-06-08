@@ -1,4 +1,5 @@
 require 'ebay/types/additional_account'
+require 'ebay/types/netted_transaction_summary'
 
 module Ebay # :nodoc:
   module Types # :nodoc:
@@ -23,6 +24,7 @@ module Ebay # :nodoc:
     #  date_time_node :last_payment_date, 'LastPaymentDate', :optional => true
     #  boolean_node :past_due, 'PastDue', 'true', 'false', :optional => true
     #  text_node :payment_method, 'PaymentMethod', :optional => true
+    #  object_node :netted_transaction_summary, 'NettedTransactionSummary', :class => NettedTransactionSummary, :optional => true
     class AccountSummary
       include XML::Mapping
       include Initializer
@@ -47,6 +49,7 @@ module Ebay # :nodoc:
       date_time_node :last_payment_date, 'LastPaymentDate', :optional => true
       boolean_node :past_due, 'PastDue', 'true', 'false', :optional => true
       text_node :payment_method, 'PaymentMethod', :optional => true
+      object_node :netted_transaction_summary, 'NettedTransactionSummary', :class => NettedTransactionSummary, :optional => true
     end
   end
 end

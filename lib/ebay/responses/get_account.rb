@@ -6,6 +6,7 @@ module Ebay # :nodoc:
   module Responses # :nodoc:
     # == Attributes
     #  text_node :account_id, 'AccountID', :optional => true
+    #  text_node :fee_netting_status, 'FeeNettingStatus', :optional => true
     #  object_node :account_summary, 'AccountSummary', :class => AccountSummary, :optional => true
     #  text_node :currency, 'Currency', :optional => true
     #  array_node :account_entries, 'AccountEntries', 'AccountEntry', :class => AccountEntry, :default_value => []
@@ -18,6 +19,7 @@ module Ebay # :nodoc:
       include Initializer
       root_element_name 'GetAccountResponse'
       text_node :account_id, 'AccountID', :optional => true
+      text_node :fee_netting_status, 'FeeNettingStatus', :optional => true
       object_node :account_summary, 'AccountSummary', :class => AccountSummary, :optional => true
       text_node :currency, 'Currency', :optional => true
       array_node :account_entries, 'AccountEntries', 'AccountEntry', :class => AccountEntry, :default_value => []

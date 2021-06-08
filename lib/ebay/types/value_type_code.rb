@@ -21,6 +21,7 @@ module Ebay # :nodoc:
       NIT = 'NIT'
       DriverLicense = 'DriverLicense'
       CNPJ = 'CNPJ'
+      VATIN = 'VATIN'
     end
   end
 end

@@ -33,14 +33,6 @@ module Ebay
     def add_item(params = {})
       commit(Ebay::Requests::AddItem, params)
     end
-    # Builds Ebay::Requests#AddItemFromSellingManagerTemplate
-    #
-    # Returns Ebay::Responses#AddItemFromSellingManagerTemplate
-    #
-    # Official Documentation for AddItemFromSellingManagerTemplate[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_AddItemFromSellingManagerTemplate.html]
-    def add_item_from_selling_manager_template(params = {})
-      commit(Ebay::Requests::AddItemFromSellingManagerTemplate, params)
-    end
     # Builds Ebay::Requests#AddItems
     #
     # Returns Ebay::Responses#AddItems
@@ -89,30 +81,6 @@ module Ebay
     def add_second_chance_item(params = {})
       commit(Ebay::Requests::AddSecondChanceItem, params)
     end
-    # Builds Ebay::Requests#AddSellingManagerInventoryFolder
-    #
-    # Returns Ebay::Responses#AddSellingManagerInventoryFolder
-    #
-    # Official Documentation for AddSellingManagerInventoryFolder[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_AddSellingManagerInventoryFolder.html]
-    def add_selling_manager_inventory_folder(params = {})
-      commit(Ebay::Requests::AddSellingManagerInventoryFolder, params)
-    end
-    # Builds Ebay::Requests#AddSellingManagerProduct
-    #
-    # Returns Ebay::Responses#AddSellingManagerProduct
-    #
-    # Official Documentation for AddSellingManagerProduct[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_AddSellingManagerProduct.html]
-    def add_selling_manager_product(params = {})
-      commit(Ebay::Requests::AddSellingManagerProduct, params)
-    end
-    # Builds Ebay::Requests#AddSellingManagerTemplate
-    #
-    # Returns Ebay::Responses#AddSellingManagerTemplate
-    #
-    # Official Documentation for AddSellingManagerTemplate[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_AddSellingManagerTemplate.html]
-    def add_selling_manager_template(params = {})
-      commit(Ebay::Requests::AddSellingManagerTemplate, params)
-    end
     # Builds Ebay::Requests#AddToItemDescription
     #
     # Returns Ebay::Responses#AddToItemDescription
@@ -160,46 +128,6 @@ module Ebay
     # Official Documentation for DeleteMyMessages[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_DeleteMyMessages.html]
     def delete_my_messages(params = {})
       commit(Ebay::Requests::DeleteMyMessages, params)
-    end
-    # Builds Ebay::Requests#DeleteSellingManagerInventoryFolder
-    #
-    # Returns Ebay::Responses#DeleteSellingManagerInventoryFolder
-    #
-    # Official Documentation for DeleteSellingManagerInventoryFolder[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_DeleteSellingManagerInventoryFolder.html]
-    def delete_selling_manager_inventory_folder(params = {})
-      commit(Ebay::Requests::DeleteSellingManagerInventoryFolder, params)
-    end
-    # Builds Ebay::Requests#DeleteSellingManagerItemAutomationRule
-    #
-    # Returns Ebay::Responses#DeleteSellingManagerItemAutomationRule
-    #
-    # Official Documentation for DeleteSellingManagerItemAutomationRule[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_DeleteSellingManagerItemAutomationRule.html]
-    def delete_selling_manager_item_automation_rule(params = {})
-      commit(Ebay::Requests::DeleteSellingManagerItemAutomationRule, params)
-    end
-    # Builds Ebay::Requests#DeleteSellingManagerProduct
-    #
-    # Returns Ebay::Responses#DeleteSellingManagerProduct
-    #
-    # Official Documentation for DeleteSellingManagerProduct[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_DeleteSellingManagerProduct.html]
-    def delete_selling_manager_product(params = {})
-      commit(Ebay::Requests::DeleteSellingManagerProduct, params)
-    end
-    # Builds Ebay::Requests#DeleteSellingManagerTemplate
-    #
-    # Returns Ebay::Responses#DeleteSellingManagerTemplate
-    #
-    # Official Documentation for DeleteSellingManagerTemplate[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_DeleteSellingManagerTemplate.html]
-    def delete_selling_manager_template(params = {})
-      commit(Ebay::Requests::DeleteSellingManagerTemplate, params)
-    end
-    # Builds Ebay::Requests#DeleteSellingManagerTemplateAutomationRule
-    #
-    # Returns Ebay::Responses#DeleteSellingManagerTemplateAutomationRule
-    #
-    # Official Documentation for DeleteSellingManagerTemplateAutomationRule[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_DeleteSellingManagerTemplateAutomationRule.html]
-    def delete_selling_manager_template_automation_rule(params = {})
-      commit(Ebay::Requests::DeleteSellingManagerTemplateAutomationRule, params)
     end
     # Builds Ebay::Requests#DisableUnpaidItemAssistance
     #
@@ -497,14 +425,6 @@ module Ebay
     def get_orders(params = {})
       commit(Ebay::Requests::GetOrders, params)
     end
-    # Builds Ebay::Requests#GetPromotionalSaleDetails
-    #
-    # Returns Ebay::Responses#GetPromotionalSaleDetails
-    #
-    # Official Documentation for GetPromotionalSaleDetails[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_GetPromotionalSaleDetails.html]
-    def get_promotional_sale_details(params = {})
-      commit(Ebay::Requests::GetPromotionalSaleDetails, params)
-    end
     # Builds Ebay::Requests#GetSellerDashboard
     #
     # Returns Ebay::Responses#GetSellerDashboard
@@ -529,14 +449,6 @@ module Ebay
     def get_seller_list(params = {})
       commit(Ebay::Requests::GetSellerList, params)
     end
-    # Builds Ebay::Requests#GetSellerPayments
-    #
-    # Returns Ebay::Responses#GetSellerPayments
-    #
-    # Official Documentation for GetSellerPayments[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_GetSellerPayments.html]
-    def get_seller_payments(params = {})
-      commit(Ebay::Requests::GetSellerPayments, params)
-    end
     # Builds Ebay::Requests#GetSellerTransactions
     #
     # Returns Ebay::Responses#GetSellerTransactions
@@ -544,78 +456,6 @@ module Ebay
     # Official Documentation for GetSellerTransactions[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_GetSellerTransactions.html]
     def get_seller_transactions(params = {})
       commit(Ebay::Requests::GetSellerTransactions, params)
-    end
-    # Builds Ebay::Requests#GetSellingManagerAlerts
-    #
-    # Returns Ebay::Responses#GetSellingManagerAlerts
-    #
-    # Official Documentation for GetSellingManagerAlerts[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_GetSellingManagerAlerts.html]
-    def get_selling_manager_alerts(params = {})
-      commit(Ebay::Requests::GetSellingManagerAlerts, params)
-    end
-    # Builds Ebay::Requests#GetSellingManagerEmailLog
-    #
-    # Returns Ebay::Responses#GetSellingManagerEmailLog
-    #
-    # Official Documentation for GetSellingManagerEmailLog[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_GetSellingManagerEmailLog.html]
-    def get_selling_manager_email_log(params = {})
-      commit(Ebay::Requests::GetSellingManagerEmailLog, params)
-    end
-    # Builds Ebay::Requests#GetSellingManagerInventory
-    #
-    # Returns Ebay::Responses#GetSellingManagerInventory
-    #
-    # Official Documentation for GetSellingManagerInventory[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_GetSellingManagerInventory.html]
-    def get_selling_manager_inventory(params = {})
-      commit(Ebay::Requests::GetSellingManagerInventory, params)
-    end
-    # Builds Ebay::Requests#GetSellingManagerInventoryFolder
-    #
-    # Returns Ebay::Responses#GetSellingManagerInventoryFolder
-    #
-    # Official Documentation for GetSellingManagerInventoryFolder[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_GetSellingManagerInventoryFolder.html]
-    def get_selling_manager_inventory_folder(params = {})
-      commit(Ebay::Requests::GetSellingManagerInventoryFolder, params)
-    end
-    # Builds Ebay::Requests#GetSellingManagerItemAutomationRule
-    #
-    # Returns Ebay::Responses#GetSellingManagerItemAutomationRule
-    #
-    # Official Documentation for GetSellingManagerItemAutomationRule[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_GetSellingManagerItemAutomationRule.html]
-    def get_selling_manager_item_automation_rule(params = {})
-      commit(Ebay::Requests::GetSellingManagerItemAutomationRule, params)
-    end
-    # Builds Ebay::Requests#GetSellingManagerSaleRecord
-    #
-    # Returns Ebay::Responses#GetSellingManagerSaleRecord
-    #
-    # Official Documentation for GetSellingManagerSaleRecord[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_GetSellingManagerSaleRecord.html]
-    def get_selling_manager_sale_record(params = {})
-      commit(Ebay::Requests::GetSellingManagerSaleRecord, params)
-    end
-    # Builds Ebay::Requests#GetSellingManagerSoldListings
-    #
-    # Returns Ebay::Responses#GetSellingManagerSoldListings
-    #
-    # Official Documentation for GetSellingManagerSoldListings[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_GetSellingManagerSoldListings.html]
-    def get_selling_manager_sold_listings(params = {})
-      commit(Ebay::Requests::GetSellingManagerSoldListings, params)
-    end
-    # Builds Ebay::Requests#GetSellingManagerTemplateAutomationRule
-    #
-    # Returns Ebay::Responses#GetSellingManagerTemplateAutomationRule
-    #
-    # Official Documentation for GetSellingManagerTemplateAutomationRule[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_GetSellingManagerTemplateAutomationRule.html]
-    def get_selling_manager_template_automation_rule(params = {})
-      commit(Ebay::Requests::GetSellingManagerTemplateAutomationRule, params)
-    end
-    # Builds Ebay::Requests#GetSellingManagerTemplates
-    #
-    # Returns Ebay::Responses#GetSellingManagerTemplates
-    #
-    # Official Documentation for GetSellingManagerTemplates[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_GetSellingManagerTemplates.html]
-    def get_selling_manager_templates(params = {})
-      commit(Ebay::Requests::GetSellingManagerTemplates, params)
     end
     # Builds Ebay::Requests#GetSessionID
     #
@@ -761,14 +601,6 @@ module Ebay
     def get_ebay_official_time(params = {})
       commit(Ebay::Requests::GeteBayOfficialTime, params)
     end
-    # Builds Ebay::Requests#IssueRefund
-    #
-    # Returns Ebay::Responses#IssueRefund
-    #
-    # Official Documentation for IssueRefund[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_IssueRefund.html]
-    def issue_refund(params = {})
-      commit(Ebay::Requests::IssueRefund, params)
-    end
     # Builds Ebay::Requests#LeaveFeedback
     #
     # Returns Ebay::Responses#LeaveFeedback
@@ -776,14 +608,6 @@ module Ebay
     # Official Documentation for LeaveFeedback[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_LeaveFeedback.html]
     def leave_feedback(params = {})
       commit(Ebay::Requests::LeaveFeedback, params)
-    end
-    # Builds Ebay::Requests#MoveSellingManagerInventoryFolder
-    #
-    # Returns Ebay::Responses#MoveSellingManagerInventoryFolder
-    #
-    # Official Documentation for MoveSellingManagerInventoryFolder[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_MoveSellingManagerInventoryFolder.html]
-    def move_selling_manager_inventory_folder(params = {})
-      commit(Ebay::Requests::MoveSellingManagerInventoryFolder, params)
     end
     # Builds Ebay::Requests#PlaceOffer
     #
@@ -881,38 +705,6 @@ module Ebay
     def revise_my_messages_folders(params = {})
       commit(Ebay::Requests::ReviseMyMessagesFolders, params)
     end
-    # Builds Ebay::Requests#ReviseSellingManagerInventoryFolder
-    #
-    # Returns Ebay::Responses#ReviseSellingManagerInventoryFolder
-    #
-    # Official Documentation for ReviseSellingManagerInventoryFolder[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_ReviseSellingManagerInventoryFolder.html]
-    def revise_selling_manager_inventory_folder(params = {})
-      commit(Ebay::Requests::ReviseSellingManagerInventoryFolder, params)
-    end
-    # Builds Ebay::Requests#ReviseSellingManagerProduct
-    #
-    # Returns Ebay::Responses#ReviseSellingManagerProduct
-    #
-    # Official Documentation for ReviseSellingManagerProduct[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_ReviseSellingManagerProduct.html]
-    def revise_selling_manager_product(params = {})
-      commit(Ebay::Requests::ReviseSellingManagerProduct, params)
-    end
-    # Builds Ebay::Requests#ReviseSellingManagerSaleRecord
-    #
-    # Returns Ebay::Responses#ReviseSellingManagerSaleRecord
-    #
-    # Official Documentation for ReviseSellingManagerSaleRecord[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_ReviseSellingManagerSaleRecord.html]
-    def revise_selling_manager_sale_record(params = {})
-      commit(Ebay::Requests::ReviseSellingManagerSaleRecord, params)
-    end
-    # Builds Ebay::Requests#ReviseSellingManagerTemplate
-    #
-    # Returns Ebay::Responses#ReviseSellingManagerTemplate
-    #
-    # Official Documentation for ReviseSellingManagerTemplate[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_ReviseSellingManagerTemplate.html]
-    def revise_selling_manager_template(params = {})
-      commit(Ebay::Requests::ReviseSellingManagerTemplate, params)
-    end
     # Builds Ebay::Requests#RevokeToken
     #
     # Returns Ebay::Responses#RevokeToken
@@ -920,14 +712,6 @@ module Ebay
     # Official Documentation for RevokeToken[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_RevokeToken.html]
     def revoke_token(params = {})
       commit(Ebay::Requests::RevokeToken, params)
-    end
-    # Builds Ebay::Requests#SaveItemToSellingManagerTemplate
-    #
-    # Returns Ebay::Responses#SaveItemToSellingManagerTemplate
-    #
-    # Official Documentation for SaveItemToSellingManagerTemplate[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_SaveItemToSellingManagerTemplate.html]
-    def save_item_to_selling_manager_template(params = {})
-      commit(Ebay::Requests::SaveItemToSellingManagerTemplate, params)
     end
     # Builds Ebay::Requests#SellerReverseDispute
     #
@@ -960,46 +744,6 @@ module Ebay
     # Official Documentation for SetNotificationPreferences[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_SetNotificationPreferences.html]
     def set_notification_preferences(params = {})
       commit(Ebay::Requests::SetNotificationPreferences, params)
-    end
-    # Builds Ebay::Requests#SetPromotionalSale
-    #
-    # Returns Ebay::Responses#SetPromotionalSale
-    #
-    # Official Documentation for SetPromotionalSale[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_SetPromotionalSale.html]
-    def set_promotional_sale(params = {})
-      commit(Ebay::Requests::SetPromotionalSale, params)
-    end
-    # Builds Ebay::Requests#SetPromotionalSaleListings
-    #
-    # Returns Ebay::Responses#SetPromotionalSaleListings
-    #
-    # Official Documentation for SetPromotionalSaleListings[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_SetPromotionalSaleListings.html]
-    def set_promotional_sale_listings(params = {})
-      commit(Ebay::Requests::SetPromotionalSaleListings, params)
-    end
-    # Builds Ebay::Requests#SetSellingManagerFeedbackOptions
-    #
-    # Returns Ebay::Responses#SetSellingManagerFeedbackOptions
-    #
-    # Official Documentation for SetSellingManagerFeedbackOptions[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_SetSellingManagerFeedbackOptions.html]
-    def set_selling_manager_feedback_options(params = {})
-      commit(Ebay::Requests::SetSellingManagerFeedbackOptions, params)
-    end
-    # Builds Ebay::Requests#SetSellingManagerItemAutomationRule
-    #
-    # Returns Ebay::Responses#SetSellingManagerItemAutomationRule
-    #
-    # Official Documentation for SetSellingManagerItemAutomationRule[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_SetSellingManagerItemAutomationRule.html]
-    def set_selling_manager_item_automation_rule(params = {})
-      commit(Ebay::Requests::SetSellingManagerItemAutomationRule, params)
-    end
-    # Builds Ebay::Requests#SetSellingManagerTemplateAutomationRule
-    #
-    # Returns Ebay::Responses#SetSellingManagerTemplateAutomationRule
-    #
-    # Official Documentation for SetSellingManagerTemplateAutomationRule[http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/io_SetSellingManagerTemplateAutomationRule.html]
-    def set_selling_manager_template_automation_rule(params = {})
-      commit(Ebay::Requests::SetSellingManagerTemplateAutomationRule, params)
     end
     # Builds Ebay::Requests#SetShippingDiscountProfiles
     #

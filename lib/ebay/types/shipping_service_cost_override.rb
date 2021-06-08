@@ -6,7 +6,6 @@ module Ebay # :nodoc:
     #  text_node :shipping_service_type, 'ShippingServiceType', :optional => true
     #  money_node :shipping_service_cost, 'ShippingServiceCost', :optional => true
     #  money_node :shipping_service_additional_cost, 'ShippingServiceAdditionalCost', :optional => true
-    #  money_node :shipping_surcharge, 'ShippingSurcharge', :optional => true
     class ShippingServiceCostOverride
       include XML::Mapping
       include Initializer
@@ -15,7 +14,6 @@ module Ebay # :nodoc:
       text_node :shipping_service_type, 'ShippingServiceType', :optional => true
       money_node :shipping_service_cost, 'ShippingServiceCost', :optional => true
       money_node :shipping_service_additional_cost, 'ShippingServiceAdditionalCost', :optional => true
-      money_node :shipping_surcharge, 'ShippingSurcharge', :optional => true
     end
   end
 end

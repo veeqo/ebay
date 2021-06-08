@@ -6,6 +6,7 @@ module Ebay # :nodoc:
       LastInvoice = 'LastInvoice'
       SpecifiedInvoice = 'SpecifiedInvoice'
       BetweenSpecifiedDates = 'BetweenSpecifiedDates'
+      OrderID = 'OrderId'
     end
   end
 end
