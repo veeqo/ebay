@@ -99,7 +99,6 @@ module Ebay #:nodoc:
       "ws/eBayISAPI.dll?SignIn"
     end
 
-
     # Simply yields the Ebay::Api class itself.  This makes configuration a bit nicer looking:
     #
     #  Ebay::Api.configure do |ebay|
@@ -114,11 +113,6 @@ module Ebay #:nodoc:
     #  end
     def self.configure
       yield self if block_given?
-    end
-
-    # The schema version the API client is currently using
-    def schema_version
-      Ebay::Schema::VERSION.to_s
     end
 
     def service_uri
@@ -148,7 +142,11 @@ module Ebay #:nodoc:
       @format = options[:format] || :object
       @auth_token = options[:auth_token] || self.class.auth_token
       @site_id = options[:site_id] || self.class.site_id
+      # The schema version the API client is currently using
+      @api_version = options[:api_version] || Ebay::Schema::VERSION.to_s
     end
+
+    attr_reader :api_version
 
     private
 
@@ -195,15 +193,15 @@ module Ebay #:nodoc:
 
     def build_headers(call_name)
       {
-          'X-EBAY-API-COMPATIBILITY-LEVEL' => schema_version.to_s,
-          'X-EBAY-API-SESSION-CERTIFICATE' => "#{dev_id};#{app_id};#{cert}",
-          'X-EBAY-API-DEV-NAME' => dev_id.to_s,
-          'X-EBAY-API-APP-NAME' => app_id.to_s,
-          'X-EBAY-API-CERT-NAME' => cert.to_s,
-          'X-EBAY-API-CALL-NAME' => call_name.to_s,
-          'X-EBAY-API-SITEID' => site_id.to_s,
-          'Content-Type' => 'text/xml',
-          'Accept-Encoding' => 'gzip'
+        'X-EBAY-API-COMPATIBILITY-LEVEL' => api_version.to_s,
+        'X-EBAY-API-SESSION-CERTIFICATE' => "#{dev_id};#{app_id};#{cert}",
+        'X-EBAY-API-DEV-NAME' => dev_id.to_s,
+        'X-EBAY-API-APP-NAME' => app_id.to_s,
+        'X-EBAY-API-CERT-NAME' => cert.to_s,
+        'X-EBAY-API-CALL-NAME' => call_name.to_s,
+        'X-EBAY-API-SITEID' => site_id.to_s,
+        'Content-Type' => 'text/xml',
+        'Accept-Encoding' => 'gzip'
       }
     end
 
