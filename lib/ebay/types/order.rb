@@ -75,6 +75,7 @@ module Ebay # :nodoc:
       object_node :checkout_status, 'CheckoutStatus', :class => CheckoutStatus, :optional => true
       object_node :shipping_details, 'ShippingDetails', :class => ShippingDetails, :optional => true
       text_node :creating_user_role, 'CreatingUserRole', :optional => true
+      boolean_node :ebay_collect_and_remit_tax, 'eBayCollectAndRemitTax', 'true', 'false', :optional => true
       date_time_node :created_time, 'CreatedTime', :optional => true
       value_array_node :payment_methods, 'PaymentMethods', :default_value => []
       text_node :seller_email, 'SellerEmail', :optional => true
