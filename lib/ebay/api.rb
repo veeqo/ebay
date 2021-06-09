@@ -158,6 +158,7 @@ module Ebay #:nodoc:
 
     def commit(request_class, params, service_key = nil)
       format = params.delete(:format) || @format
+      requested_api_version = params.delete(:requested_api_version)
 
       @service_key = service_key
 
@@ -169,15 +170,15 @@ module Ebay #:nodoc:
 
       request = request_class.new(params)
       yield request if block_given?
-      invoke(request, format)
+      invoke(request, format, requested_api_version: requested_api_version)
     end
 
-    def invoke(request, format)
+    def invoke(request, format, requested_api_version: nil)
       response = nil
       if (@service_key == nil)
         response = connection.post(service_uri.path,
                                    build_body(request, XmlNs),
-                                   build_headers(request.call_name)
+                                   build_headers(request.call_name, requested_api_version: requested_api_version)
         )
 
       else
@@ -191,17 +192,19 @@ module Ebay #:nodoc:
       parse decompress(response), format
     end
 
-    def build_headers(call_name)
+    def build_headers(call_name, requested_api_version: nil)
+      requested_api_version ||= api_version
+
       {
-        'X-EBAY-API-COMPATIBILITY-LEVEL' => api_version.to_s,
+        'X-EBAY-API-COMPATIBILITY-LEVEL' => requested_api_version.to_s,
         'X-EBAY-API-SESSION-CERTIFICATE' => "#{dev_id};#{app_id};#{cert}",
-        'X-EBAY-API-DEV-NAME' => dev_id.to_s,
-        'X-EBAY-API-APP-NAME' => app_id.to_s,
-        'X-EBAY-API-CERT-NAME' => cert.to_s,
-        'X-EBAY-API-CALL-NAME' => call_name.to_s,
-        'X-EBAY-API-SITEID' => site_id.to_s,
-        'Content-Type' => 'text/xml',
-        'Accept-Encoding' => 'gzip'
+        'X-EBAY-API-DEV-NAME'            => dev_id.to_s,
+        'X-EBAY-API-APP-NAME'            => app_id.to_s,
+        'X-EBAY-API-CERT-NAME'           => cert.to_s,
+        'X-EBAY-API-CALL-NAME'           => call_name.to_s,
+        'X-EBAY-API-SITEID'              => site_id.to_s,
+        'Content-Type'                   => 'text/xml',
+        'Accept-Encoding'                => 'gzip'
       }
     end
 
