@@ -118,7 +118,7 @@ class EbayTest < Test::Unit::TestCase
   def test_force_encoding_to_default
     response_in_ascii = load_response(:local_lang_chars).force_encoding('ASCII-8BIT')
     Ebay::HttpMock.respond_with parse_response(response_in_ascii)
-    order = @ebay.get_orders(order_ids: ['00000000000-11111111111']).orders.orders.first
+    order = @ebay.get_orders(order_ids: ['00000000000-11111111111']).orders.first
 
     assert_equal 'Jüss DÖe', order.shipping_address.name
     assert_equal 'Österreich', order.shipping_address.country_name
@@ -128,7 +128,7 @@ class EbayTest < Test::Unit::TestCase
   def test_extracting_non_matching_encoding
     response_in_ascii = load_response(:local_lang_chars).force_encoding('ASCII-8BIT')
     Ebay::HttpMock.respond_with parse_response(response_in_ascii, headers: { 'Content-Type' => 'text/html; charset=utf-8' })
-    order = @ebay.get_orders(order_ids: ['00000000000-11111111111']).orders.orders.first
+    order = @ebay.get_orders(order_ids: ['00000000000-11111111111']).orders.first
 
     assert_equal 'Jüss DÖe', order.shipping_address.name
     assert_equal 'Österreich', order.shipping_address.country_name
@@ -138,7 +138,7 @@ class EbayTest < Test::Unit::TestCase
   def test_extracting_matching_encoding
     response_in_ascii = load_response(:local_lang_chars).force_encoding('ASCII-8BIT')
     Ebay::HttpMock.respond_with parse_response(response_in_ascii, headers: { 'Content-Type' => 'text/html; charset=ascii-8bit' })
-    order = @ebay.get_orders(order_ids: ['00000000000-11111111111']).orders.orders.first
+    order = @ebay.get_orders(order_ids: ['00000000000-11111111111']).orders.first
 
     assert_equal 'Jüss DÖe', order.shipping_address.name
     assert_equal 'Österreich', order.shipping_address.country_name
@@ -150,7 +150,7 @@ class EbayTest < Test::Unit::TestCase
     compressed = Zlib.gzip(response_in_ascii)
 
     Ebay::HttpMock.respond_with parse_response(compressed, headers: { 'Content-Encoding' => 'gzip' })
-    order = @ebay.get_orders(order_ids: ['00000000000-11111111111']).orders.orders.first
+    order = @ebay.get_orders(order_ids: ['00000000000-11111111111']).orders.first
 
     assert_equal 'Jüss DÖe', order.shipping_address.name
     assert_equal 'Österreich', order.shipping_address.country_name
