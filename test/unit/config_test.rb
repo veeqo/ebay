@@ -32,4 +32,15 @@ class ConfigTest < Test::Unit::TestCase
     end
     assert_equal 1000, Api.net_read_timeout
   end
+
+  def test_default_ssl_verify_mode
+    assert_equal OpenSSL::SSL::VERIFY_PEER, Api.ssl_verify_mode
+  end
+
+  def test_override_ssl_verify_mode
+    Api.configure do |config|
+      config.ssl_verify_mode = OpenSSL::SSL::VERIFY_NONE
+    end
+    assert_equal OpenSSL::SSL::VERIFY_NONE, Api.ssl_verify_mode
+  end
 end
