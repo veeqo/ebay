@@ -3,6 +3,7 @@ require 'ebay/types/buyer'
 require 'ebay/types/seller'
 require 'ebay/types/charity_id'
 require 'ebay/types/bidding_summary'
+require 'ebay/types/membership_detail'
 
 module Ebay # :nodoc:
   module Types # :nodoc:
@@ -40,7 +41,6 @@ module Ebay # :nodoc:
     #  boolean_node :ebay_wiki_read_only, 'eBayWikiReadOnly', 'true', 'false', :optional => true
     #  numeric_node :tuv_level, 'TUVLevel', :optional => true
     #  text_node :vatid, 'VATID', :optional => true
-    #  boolean_node :motors_dealer, 'MotorsDealer', 'true', 'false', :optional => true
     #  text_node :seller_payment_method, 'SellerPaymentMethod', :optional => true
     #  object_node :bidding_summary, 'BiddingSummary', :class => BiddingSummary, :optional => true
     #  boolean_node :user_anonymized, 'UserAnonymized', 'true', 'false', :optional => true
@@ -50,6 +50,7 @@ module Ebay # :nodoc:
     #  boolean_node :qualifies_for_selling, 'QualifiesForSelling', 'true', 'false', :optional => true
     #  text_node :static_alias, 'StaticAlias', :optional => true
     #  object_node :shipping_address, 'ShippingAddress', :class => Address, :optional => true
+    #  array_node :memberships, 'Membership', 'Program', :class => MembershipDetail, :default_value => []
     #  text_node :user_first_name, 'UserFirstName', :optional => true
     #  text_node :user_last_name, 'UserLastName', :optional => true
     class User
@@ -89,7 +90,6 @@ module Ebay # :nodoc:
       boolean_node :ebay_wiki_read_only, 'eBayWikiReadOnly', 'true', 'false', :optional => true
       numeric_node :tuv_level, 'TUVLevel', :optional => true
       text_node :vatid, 'VATID', :optional => true
-      boolean_node :motors_dealer, 'MotorsDealer', 'true', 'false', :optional => true
       text_node :seller_payment_method, 'SellerPaymentMethod', :optional => true
       object_node :bidding_summary, 'BiddingSummary', :class => BiddingSummary, :optional => true
       boolean_node :user_anonymized, 'UserAnonymized', 'true', 'false', :optional => true
@@ -99,6 +99,7 @@ module Ebay # :nodoc:
       boolean_node :qualifies_for_selling, 'QualifiesForSelling', 'true', 'false', :optional => true
       text_node :static_alias, 'StaticAlias', :optional => true
       object_node :shipping_address, 'ShippingAddress', :class => Address, :optional => true
+      array_node :memberships, 'Membership', 'Program', :class => MembershipDetail, :default_value => []
       text_node :user_first_name, 'UserFirstName', :optional => true
       text_node :user_last_name, 'UserLastName', :optional => true
     end

@@ -128,6 +128,16 @@ require 'ebay/types/global_shipping_enabled_definition'
 require 'ebay/types/additional_compatibility_enabled_definition'
 require 'ebay/types/pickup_drop_off_enabled_definition'
 require 'ebay/types/digital_good_delivery_enabled_definition'
+require 'ebay/types/epid_supported_definition'
+require 'ebay/types/k_type_supported_definition'
+require 'ebay/types/product_required_enabled_definition'
+require 'ebay/types/domestic_returns_accepted_definition'
+require 'ebay/types/international_returns_accepted_definition'
+require 'ebay/types/domestic_returns_duration_definition'
+require 'ebay/types/international_returns_duration_definition'
+require 'ebay/types/domestic_returns_shipment_payee_definition'
+require 'ebay/types/international_returns_shipment_payee_definition'
+require 'ebay/types/return_policy_description_enabled_definition'
 
 module Ebay # :nodoc:
   module Types # :nodoc:
@@ -264,6 +274,18 @@ module Ebay # :nodoc:
     #  object_node :additional_compatibility_enabled, 'AdditionalCompatibilityEnabled', :class => AdditionalCompatibilityEnabledDefinition, :optional => true
     #  object_node :pickup_drop_off_enabled, 'PickupDropOffEnabled', :class => PickupDropOffEnabledDefinition, :optional => true
     #  object_node :digital_good_delivery_enabled, 'DigitalGoodDeliveryEnabled', :class => DigitalGoodDeliveryEnabledDefinition, :optional => true
+    #  object_node :epid_supported, 'EpidSupported', :class => EpidSupportedDefinition, :optional => true
+    #  object_node :k_type_supported, 'KTypeSupported', :class => KTypeSupportedDefinition, :optional => true
+    #  object_node :product_required_enabled, 'ProductRequiredEnabled', :class => ProductRequiredEnabledDefinition, :optional => true
+    #  object_node :domestic_returns_accepted_values, 'DomesticReturnsAcceptedValues', :class => DomesticReturnsAcceptedDefinition, :optional => true
+    #  object_node :international_returns_accepted_values, 'InternationalReturnsAcceptedValues', :class => InternationalReturnsAcceptedDefinition, :optional => true
+    #  object_node :domestic_returns_duration_values, 'DomesticReturnsDurationValues', :class => DomesticReturnsDurationDefinition, :optional => true
+    #  object_node :international_returns_duration_values, 'InternationalReturnsDurationValues', :class => InternationalReturnsDurationDefinition, :optional => true
+    #  object_node :domestic_returns_shipment_payee_values, 'DomesticReturnsShipmentPayeeValues', :class => DomesticReturnsShipmentPayeeDefinition, :optional => true
+    #  object_node :international_returns_shipment_payee_values, 'InternationalReturnsShipmentPayeeValues', :class => InternationalReturnsShipmentPayeeDefinition, :optional => true
+    #  value_array_node :domestic_refund_method_values, 'DomesticRefundMethodValues', 'DomesticRefundMethod', :default_value => []
+    #  value_array_node :international_refund_method_values, 'InternationalRefundMethodValues', 'InternationalRefundMethod', :default_value => []
+    #  object_node :return_policy_description_enabled, 'ReturnPolicyDescriptionEnabled', :class => ReturnPolicyDescriptionEnabledDefinition, :optional => true
     class FeatureDefinitions
       include XML::Mapping
       include Initializer
@@ -400,6 +422,18 @@ module Ebay # :nodoc:
       object_node :additional_compatibility_enabled, 'AdditionalCompatibilityEnabled', :class => AdditionalCompatibilityEnabledDefinition, :optional => true
       object_node :pickup_drop_off_enabled, 'PickupDropOffEnabled', :class => PickupDropOffEnabledDefinition, :optional => true
       object_node :digital_good_delivery_enabled, 'DigitalGoodDeliveryEnabled', :class => DigitalGoodDeliveryEnabledDefinition, :optional => true
+      object_node :epid_supported, 'EpidSupported', :class => EpidSupportedDefinition, :optional => true
+      object_node :k_type_supported, 'KTypeSupported', :class => KTypeSupportedDefinition, :optional => true
+      object_node :product_required_enabled, 'ProductRequiredEnabled', :class => ProductRequiredEnabledDefinition, :optional => true
+      object_node :domestic_returns_accepted_values, 'DomesticReturnsAcceptedValues', :class => DomesticReturnsAcceptedDefinition, :optional => true
+      object_node :international_returns_accepted_values, 'InternationalReturnsAcceptedValues', :class => InternationalReturnsAcceptedDefinition, :optional => true
+      object_node :domestic_returns_duration_values, 'DomesticReturnsDurationValues', :class => DomesticReturnsDurationDefinition, :optional => true
+      object_node :international_returns_duration_values, 'InternationalReturnsDurationValues', :class => InternationalReturnsDurationDefinition, :optional => true
+      object_node :domestic_returns_shipment_payee_values, 'DomesticReturnsShipmentPayeeValues', :class => DomesticReturnsShipmentPayeeDefinition, :optional => true
+      object_node :international_returns_shipment_payee_values, 'InternationalReturnsShipmentPayeeValues', :class => InternationalReturnsShipmentPayeeDefinition, :optional => true
+      value_array_node :domestic_refund_method_values, 'DomesticRefundMethodValues', 'DomesticRefundMethod', :default_value => []
+      value_array_node :international_refund_method_values, 'InternationalRefundMethodValues', 'InternationalRefundMethod', :default_value => []
+      object_node :return_policy_description_enabled, 'ReturnPolicyDescriptionEnabled', :class => ReturnPolicyDescriptionEnabledDefinition, :optional => true
     end
   end
 end

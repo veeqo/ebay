@@ -63,6 +63,8 @@ module Ebay # :nodoc:
     #  array_node :buyer_package_enclosures, 'BuyerPackageEnclosures', 'BuyerPackageEnclosure', :class => BuyerPackageEnclosure, :default_value => []
     #  text_node :extended_order_id, 'ExtendedOrderID', :optional => true
     #  boolean_node :contains_ebay_plus_transaction, 'ContainseBayPlusTransaction', 'true', 'false', :optional => true
+    #  boolean_node :ebay_collect_and_remit_tax, 'eBayCollectAndRemitTax', 'true', 'false', :optional => true
+    #  numeric_node :order_line_item_count, 'OrderLineItemCount', :optional => true
     class Order
       include XML::Mapping
       include Initializer
@@ -75,6 +77,7 @@ module Ebay # :nodoc:
       object_node :checkout_status, 'CheckoutStatus', :class => CheckoutStatus, :optional => true
       object_node :shipping_details, 'ShippingDetails', :class => ShippingDetails, :optional => true
       text_node :creating_user_role, 'CreatingUserRole', :optional => true
+      boolean_node :ebay_collect_and_remit_tax, 'eBayCollectAndRemitTax', 'true', 'false', :optional => true
       date_time_node :created_time, 'CreatedTime', :optional => true
       value_array_node :payment_methods, 'PaymentMethods', :default_value => []
       text_node :seller_email, 'SellerEmail', :optional => true
@@ -113,6 +116,8 @@ module Ebay # :nodoc:
       array_node :buyer_package_enclosures, 'BuyerPackageEnclosures', 'BuyerPackageEnclosure', :class => BuyerPackageEnclosure, :default_value => []
       text_node :extended_order_id, 'ExtendedOrderID', :optional => true
       boolean_node :contains_ebay_plus_transaction, 'ContainseBayPlusTransaction', 'true', 'false', :optional => true
+      boolean_node :ebay_collect_and_remit_tax, 'eBayCollectAndRemitTax', 'true', 'false', :optional => true
+      numeric_node :order_line_item_count, 'OrderLineItemCount', :optional => true
     end
   end
 end

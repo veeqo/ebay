@@ -1,5 +1,5 @@
 require 'ebay/types/pagination_result'
-require 'ebay/types/order'
+require 'ebay/types/order_array'
 
 module Ebay # :nodoc:
   module Responses # :nodoc:
@@ -16,6 +16,9 @@ module Ebay # :nodoc:
       root_element_name 'GetOrdersResponse'
       object_node :pagination_result, 'PaginationResult', :class => PaginationResult, :optional => true
       boolean_node :has_more_orders, 'HasMoreOrders', 'true', 'false', :optional => true
+      # Originally generated like
+      #  object_node :orders, 'OrderArray', :class => OrderArray, :optional => true
+      # However left the old version to reduce scope of changes at the moment.
       array_node :orders, 'OrderArray', 'Order', :class => Order, :default_value => []
       numeric_node :orders_per_page, 'OrdersPerPage', :optional => true
       numeric_node :page_number, 'PageNumber', :optional => true

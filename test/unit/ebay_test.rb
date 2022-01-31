@@ -38,6 +38,18 @@ class EbayTest < Test::Unit::TestCase
     assert_equal api_version.to_s, ebay.send(:build_headers, 'GeteBayOfficialTime')['X-EBAY-API-COMPATIBILITY-LEVEL']
   end
 
+  def test_override_api_version_header
+    api_version = (Ebay::Schema::VERSION - 10)
+    requested_api_version = api_version + 5
+    ebay = Api.new api_version: api_version
+
+    assert_equal requested_api_version.to_s, ebay.send(:build_headers, 'GeteBayOfficialTime', requested_api_version: requested_api_version)['X-EBAY-API-COMPATIBILITY-LEVEL']
+    assert_equal api_version.to_s, ebay.send(:build_headers, 'GeteBayOfficialTime', requested_api_version: nil)['X-EBAY-API-COMPATIBILITY-LEVEL']
+
+    ebay = Api.new
+    assert_equal Ebay::Schema::VERSION.to_s, ebay.send(:build_headers, 'GeteBayOfficialTime', requested_api_version: nil)['X-EBAY-API-COMPATIBILITY-LEVEL']
+  end
+
 	def test_override_site_id
 	  ebay = Api.new(:site_id => 2)
 	  assert_equal 0, Api.site_id
