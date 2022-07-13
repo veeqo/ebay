@@ -13,6 +13,9 @@ module Ebay # :nodoc:
       include Initializer
       root_element_name 'VariationSpecificPictureSet'
       text_node :variation_specific_value, 'VariationSpecificValue', :optional => true
+      # eBay returns multiple nodes with the same PictureURL tag,
+      # so 'picture_urls' has been introduced to parse them correctly.
+      value_array_node :picture_urls, 'PictureURL', :default_value => [], :optional => true
       text_node :picture_url, 'PictureURL', :optional => true
       text_node :gallery_url, 'GalleryURL', :optional => true
       text_node :external_picture_url, 'ExternalPictureURL', :optional => true
