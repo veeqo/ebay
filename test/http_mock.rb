@@ -1,5 +1,11 @@
 module Ebay
   class HttpMock
+    class NoResponseRecorded < StandardError
+      def message
+        @message || 'No more responses have been recorded'
+      end
+    end
+
     class << self
       def responses
         @@responses ||= []
@@ -16,7 +22,7 @@ module Ebay
     end
 
     def post(*args)
-      self.class.responses.shift || raise("No more responses have been recorded")
+      self.class.responses.shift || raise(NoResponseRecorded)
     end
 
     def initialize(site)
