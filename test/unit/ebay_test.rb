@@ -162,4 +162,18 @@ class EbayTest < Test::Unit::TestCase
       @ebay.get_sushi
     end
   end
+
+  def test_default_request_context
+    ebay_api = Api.new(site_id: 2)
+    default_request_context = {}
+
+    assert_equal default_request_context, ebay_api.request_context
+  end
+
+  def test_override_request_context
+    expected_request_context = { foo: :bar }
+    ebay_api = Api.new(site_id: 2, request_context: expected_request_context)
+
+    assert_equal expected_request_context, ebay_api.request_context
+  end
 end
