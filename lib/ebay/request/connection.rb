@@ -40,7 +40,6 @@ module Ebay #:nodoc:
     end
     self.log_level = Logger::WARN
 
-
     def initialize(site)
       @site = site
     end

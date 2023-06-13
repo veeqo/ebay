@@ -109,7 +109,7 @@ class EbayTest < Test::Unit::TestCase
       assert_equal 1, exception.errors.size
       error = exception.errors.first
       assert_equal 'Your application has exceeded usage limit on this call.', error.short_message
-      assert_equal 'Your application has exceeded usage limit on this call, please make call to GetAPIAccessRules to check your call usage.', error.long_message
+      assert_equal 'Your application has exceeded usage limit on this call, please make call to Developer Analytics API to check your call usage.', error.long_message
       assert_equal ErrorClassificationCode::RequestError, error.error_classification
       assert_equal exception.class, Ebay::RequestLimitExceeded
     end

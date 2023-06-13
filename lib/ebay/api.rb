@@ -3,6 +3,7 @@ require 'zlib'
 require 'stringio'
 require 'ebay/request/connection'
 require 'ebay/api_methods'
+require 'ebay/response_handler'
 
 module Ebay #:nodoc:
   class EbayError < StandardError #:nodoc:
@@ -176,6 +177,7 @@ module Ebay #:nodoc:
 
     def invoke(request, format, requested_api_version: nil)
       response = nil
+
       if (@service_key == nil)
         response = connection.post(service_uri.path,
                                    build_body(request, XmlNs),
@@ -278,14 +280,7 @@ module Ebay #:nodoc:
         # Fixes the wrong case of API returned by eBay
         fix_root_element_name(xml)
         result = XML::Mapping.load_object_from_xml(xml.root)
-        case result.ack
-          when Ebay::Types::AckCode::Failure, Ebay::Types::AckCode::PartialFailure
-            if EbayError.full_error_message(result.errors) =~ /GetAPIAccessRules/
-              raise RequestLimitExceeded.new(result.errors)
-            else
-              raise RequestError.new(result.errors)
-            end
-        end
+        Ebay::ResponseHandler.new(result).call
       when :raw
         result = content
       else
