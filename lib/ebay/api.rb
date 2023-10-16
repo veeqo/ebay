@@ -24,6 +24,7 @@ module Ebay #:nodoc:
   end
 
   class RequestLimitExceeded < RequestError; end
+  class ItemNotAccessible < RequestError; end
 
   # == Overview
   # Api is the main proxy class responsible for instantiating and invoking

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<GetItemResponse xmlns='urn:ebay:apis:eBLBaseComponents'>
+  <Timestamp>2023-10-16T14:57:46.740Z</Timestamp>
+  <Ack>Failure</Ack>
+  <Errors>
+    <ShortMessage>Item can&apos;t be accessed.</ShortMessage>
+    <LongMessage>This item cannot be accessed because the listing has been deleted or you are not the seller.</LongMessage>
+    <ErrorCode>17</ErrorCode>
+    <SeverityCode>Error</SeverityCode>
+    <ErrorParameters ParamID='0'>
+      <Value>123456789</Value>
+    </ErrorParameters>
+    <ErrorClassification>RequestError</ErrorClassification>
+  </Errors>
+  <Errors>
+    <ShortMessage>Your application has exceeded usage limit on this call.</ShortMessage>
+    <LongMessage>Your application has exceeded usage limit on this call, please make call to Developer Analytics API to check your call usage.</LongMessage>
+    <ErrorCode>518</ErrorCode>
+    <SeverityCode>Error</SeverityCode>
+    <ErrorParameters ParamID='0'>
+      <Value>123456789</Value>
+    </ErrorParameters>
+    <ErrorClassification>RequestError</ErrorClassification>
+  </Errors>
+  <Version>1193</Version>
+  <Build>E1193_CORE_API_19146280_R1</Build>
+  <Item/>
+</GetItemResponse>
