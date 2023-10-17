@@ -43,4 +43,22 @@ class ConfigTest < Test::Unit::TestCase
     end
     assert_equal OpenSSL::SSL::VERIFY_NONE, Api.ssl_verify_mode
   end
+
+  def test_default_request_event_name
+    assert_equal 'ebay_trading_api.request.details', Api.request_event_name
+  end
+
+  def test_override_request_event_name
+    default_request_event_name = Api.request_event_name
+
+    Api.configure do |config|
+      config.request_event_name = 'ebay.request'
+    end
+
+    assert_equal 'ebay.request', Api.request_event_name
+
+    Api.configure do |config|
+      config.request_event_name = default_request_event_name
+    end
+  end
 end

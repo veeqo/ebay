@@ -44,9 +44,9 @@ module Ebay #:nodoc:
       @site = site
     end
 
-    def post(path, body, headers)
-      #request(:post, path, body, headers)
+    delegate :request_event_name, to: 'Ebay::Api'
 
+    def post(path, body, headers, request_env: {})
       if logger.debug?
         logger.debug("Request Path:")
         logger.debug(path)
@@ -59,7 +59,9 @@ module Ebay #:nodoc:
       end
 
       begin
-        response = request(:post, path, body, headers)
+        response = request(:post, path, body, headers, request_env: request_env)
+
+        process_response(response)
       rescue => e
         if logger.debug?
           logger.debug("Response Error:")
@@ -79,9 +81,7 @@ module Ebay #:nodoc:
 
     private
 
-    def request(method, *arguments)
-      response = http.send(method, *arguments)
-
+    def process_response(response)
       case response.code.to_i
       when 200...300
         response
@@ -93,6 +93,16 @@ module Ebay #:nodoc:
         raise(ServerError.new(response))
       else
         raise(ConnectionError.new(response, "Unknown response code: #{response.code}"))
+      end
+    end
+
+    def request(method, path, body, headers, request_env: {})
+      request_env.merge!(method: method)
+
+      ActiveSupport::Notifications.instrument(request_event_name, **request_env) do |payload|
+        http.send(method, path, body, headers).tap do |response|
+          payload[:response] = response
+        end
       end
     end
 

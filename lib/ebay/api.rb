@@ -48,11 +48,14 @@ module Ebay #:nodoc:
     include ApiMethods
     XmlNs = 'urn:ebay:apis:eBLBaseComponents'
     DEFAULT_ENCODING = 'UTF-8'
+    DEFAULT_REQUEST_EVENT_NAME = 'ebay_trading_api.request.details'
 
     cattr_accessor :use_sandbox, :sandbox_url, :production_url, :site_id, :services
     cattr_accessor :ru_name_sandbox_url, :ru_name_production_url, :ru_name
     cattr_accessor :dev_id, :app_id, :cert, :auth_token
     cattr_accessor :username, :password, :net_read_timeout, :ssl_verify_mode
+    cattr_accessor :request_event_name
+
     attr_reader :auth_token, :site_id
 
     self.sandbox_url = 'https://api.sandbox.ebay.com/ws/api.dll'
@@ -63,6 +66,7 @@ module Ebay #:nodoc:
     self.services = nil
     self.net_read_timeout = 2000
     self.ssl_verify_mode = OpenSSL::SSL::VERIFY_PEER
+    self.request_event_name = DEFAULT_REQUEST_EVENT_NAME
 
     # Make the default site US
     self.site_id = 0
@@ -146,9 +150,11 @@ module Ebay #:nodoc:
       @site_id = options[:site_id] || self.class.site_id
       # The schema version the API client is currently using
       @api_version = options[:api_version] || Ebay::Schema::VERSION.to_s
+      @request_context = options[:request_context] || {}
     end
 
     attr_reader :api_version
+    attr_accessor :request_context
 
     private
 
@@ -176,30 +182,47 @@ module Ebay #:nodoc:
     end
 
     def invoke(request, format, requested_api_version: nil)
-      response = nil
+      path, body, headers, api_version =
+        prepare_request_params(request, requested_api_version: requested_api_version)
 
+      request_event_env = prepare_request_event_env(request, api_version)
+
+      response = connection.post(path, body, headers, request_env: request_event_env)
+
+      parse(decompress(response), format)
+    end
+
+    def prepare_request_event_env(request, api_version)
+      {
+        api_endpoint: request.call_name,
+        api_version: api_version,
+        request_context: request_context.merge(site_id: site_id)
+      }
+    end
+
+    def prepare_request_params(request, requested_api_version: nil)
       if (@service_key == nil)
-        response = connection.post(service_uri.path,
-                                   build_body(request, XmlNs),
-                                   build_headers(request.call_name, requested_api_version: requested_api_version)
-        )
-
+        path = service_uri.path
+        body = build_body(request, XmlNs)
+        headers = build_headers(request.call_name, requested_api_version: requested_api_version)
       else
-        response = connection.post(service_uri_by_service_key(@service_key).path,
-                                   build_body(request, services[@service_key][:namespace]),
-                                   build_soa_headers(request.call_name)
-        )
-
+        path = service_uri_by_service_key(@service_key).path
+        body = build_body(request, services[@service_key][:namespace])
+        headers = build_soa_headers(request.call_name)
       end
 
-      parse decompress(response), format
+      [path, body, headers, get_api_version(requested_api_version)]
+    end
+
+    def get_api_version(requested_api_version = nil)
+      requested_api_version || api_version
     end
 
     def build_headers(call_name, requested_api_version: nil)
-      requested_api_version ||= api_version
+      current_api_version = get_api_version(requested_api_version)
 
       {
-        'X-EBAY-API-COMPATIBILITY-LEVEL' => requested_api_version.to_s,
+        'X-EBAY-API-COMPATIBILITY-LEVEL' => current_api_version.to_s,
         'X-EBAY-API-SESSION-CERTIFICATE' => "#{dev_id};#{app_id};#{cert}",
         'X-EBAY-API-DEV-NAME'            => dev_id.to_s,
         'X-EBAY-API-APP-NAME'            => app_id.to_s,
