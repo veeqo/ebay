@@ -6,7 +6,7 @@ class Widget
 end
 
 class DateTimeNodeTest < Test::Unit::TestCase
-  
+
   def setup
     @xml = <<-END
 <Widget>
@@ -18,13 +18,13 @@ class DateTimeNodeTest < Test::Unit::TestCase
 
   def test_load_from_xml
     item = Widget.load_from_xml(REXML::Document.new(@xml).root)
-    assert_instance_of Time, item.shipped_on
-    assert_equal Time.parse('2006-07-21T21:52:37.000Z'), item.shipped_on
-  end 
+    assert_instance_of ActiveSupport::TimeWithZone, item.shipped_on
+    assert_equal Time.zone.parse('2006-07-21T21:52:37.000Z'), item.shipped_on
+  end
 
   def test_save_to_xml
     widget = Widget.new
-    widget.shipped_on = Time.parse('2006-07-21T21:52:37.000Z')
+    widget.shipped_on = Time.zone.parse('2006-07-21T21:52:37.000Z')
     assert_equal '<widget><ShippedOn>2006-07-21 21:52:37</ShippedOn></widget>', widget.save_to_xml.to_s
   end
 
@@ -34,4 +34,3 @@ class DateTimeNodeTest < Test::Unit::TestCase
     assert_raise(RuntimeError){ widget.save_to_xml }
   end
 end
-
