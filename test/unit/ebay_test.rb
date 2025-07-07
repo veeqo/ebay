@@ -115,6 +115,30 @@ class EbayTest < Test::Unit::TestCase
     end
   end
 
+  def test_raise_on_error_with_item_not_accessible
+    Ebay::HttpMock.respond_with responses(:get_item_with_item_not_accessible)
+    begin
+      @ebay.get_item(item_id: '123456789')
+    rescue Ebay::RequestError => exception
+      assert_equal 1, exception.errors.size
+      error = exception.errors.first
+      assert_equal 'Item can\'t be accessed.', error.short_message
+      assert_equal 'This item cannot be accessed because the listing has been deleted or you are not the seller.', error.long_message
+      assert_equal ErrorClassificationCode::RequestError, error.error_classification
+      assert_equal exception.class, Ebay::ItemNotAccessible
+    end
+  end
+
+  def test_priority_of_request_limit_exceeded_failure
+    Ebay::HttpMock.respond_with responses(:get_item_with_multiple_failures)
+    begin
+      @ebay.get_item(item_id: '123456789')
+    rescue Ebay::RequestError => exception
+      assert_equal 2, exception.errors.size
+      assert_equal exception.class, Ebay::RequestLimitExceeded
+    end
+  end
+
   def test_force_encoding_to_default
     response_in_ascii = load_response(:local_lang_chars).force_encoding('ASCII-8BIT')
     Ebay::HttpMock.respond_with parse_response(response_in_ascii)

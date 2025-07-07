@@ -5,7 +5,8 @@ module Ebay #:nodoc:
     # Error codes explained:
     # https://developer.ebay.com/devzone/xml/docs/Reference/ebay/Errors/errormessages.htm
     ERROR_CODES = [
-      (REQUEST_LIMIT_EXCEEDED = '518').freeze
+      (REQUEST_LIMIT_EXCEEDED = '518').freeze,
+      (ITEM_NOT_ACCESSIBLE = '17').freeze
     ].freeze
 
     def initialize(response)
@@ -16,11 +17,11 @@ module Ebay #:nodoc:
     def call
       case response.ack
       when Ebay::Types::AckCode::Failure, Ebay::Types::AckCode::PartialFailure
-        if request_limit_exceeded?(response.errors)
-          raise RequestLimitExceeded.new(response.errors)
-        else
-          raise RequestError.new(response.errors)
-        end
+        # The check for request limit error has highest priority
+        raise RequestLimitExceeded.new(response.errors) if request_limit_exceeded?
+        raise ItemNotAccessible.new(response.errors) if item_not_accessible?
+
+        raise RequestError.new(response.errors)
       end
 
       response
@@ -28,8 +29,12 @@ module Ebay #:nodoc:
 
     private
 
-    def request_limit_exceeded?(errors)
-      errors.any? { |error| error.error_code.to_s == REQUEST_LIMIT_EXCEEDED }
+    def request_limit_exceeded?
+      response.errors.any? { |error| error.error_code.to_s == REQUEST_LIMIT_EXCEEDED }
+    end
+
+    def item_not_accessible?
+      response.errors.any? { |error| error.error_code.to_s == ITEM_NOT_ACCESSIBLE }
     end
   end
 end
