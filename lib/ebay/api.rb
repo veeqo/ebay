@@ -176,6 +176,8 @@ module Ebay #:nodoc:
         params[:username] = username
         params[:password] = password
         params[:auth_token] = auth_token
+        # Pass OAuth2 token to request object
+        params[:rest_api_oauth_token] = @rest_api_oauth_token if @rest_api_oauth_token
       end
 
       request = request_class.new(params)
