@@ -55,9 +55,9 @@ module Ebay #:nodoc:
     cattr_accessor :ru_name_sandbox_url, :ru_name_production_url, :ru_name
     cattr_accessor :dev_id, :app_id, :cert, :auth_token
     cattr_accessor :username, :password, :net_read_timeout, :ssl_verify_mode
-    cattr_accessor :request_event_name
+    cattr_accessor :request_event_name, :rest_api_oauth_token
 
-    attr_reader :auth_token, :site_id
+    attr_reader :auth_token, :site_id, :rest_api_oauth_token
 
     self.sandbox_url = 'https://api.sandbox.ebay.com/ws/api.dll'
     self.production_url = 'https://api.ebay.com/ws/api.dll'
@@ -148,6 +148,7 @@ module Ebay #:nodoc:
     def initialize(options = {})
       @format = options[:format] || :object
       @auth_token = options[:auth_token] || self.class.auth_token
+      @rest_api_oauth_token = options[:rest_api_oauth_token] || self.class.rest_api_oauth_token
       @site_id = options[:site_id] || self.class.site_id
       # The schema version the API client is currently using
       @api_version = options[:api_version] || Ebay::Schema::VERSION.to_s
@@ -222,7 +223,7 @@ module Ebay #:nodoc:
     def build_headers(call_name, requested_api_version: nil)
       current_api_version = get_api_version(requested_api_version)
 
-      {
+      headers = {
         'X-EBAY-API-COMPATIBILITY-LEVEL' => current_api_version.to_s,
         'X-EBAY-API-SESSION-CERTIFICATE' => "#{dev_id};#{app_id};#{cert}",
         'X-EBAY-API-DEV-NAME'            => dev_id.to_s,
@@ -233,6 +234,13 @@ module Ebay #:nodoc:
         'Content-Type'                   => 'text/xml',
         'Accept-Encoding'                => 'gzip'
       }
+
+      # Add OAuth2 token if present
+      if @rest_api_oauth_token
+        headers['X-EBAY-API-IAF-TOKEN'] = @rest_api_oauth_token
+      end
+
+      headers
     end
 
     def build_soa_headers(call_name)

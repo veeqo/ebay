@@ -68,6 +68,35 @@ class EbayTest < Test::Unit::TestCase
 	  assert_equal 'OVERRIDE', ebay.auth_token
 	end
 
+  def test_build_oauth_headers
+    oauth_token = "v^1.1#i^1#I^3#p^3#f^...r^0#t^H4s"
+    ebay = Api.new(rest_api_oauth_token: oauth_token)
+    headers = ebay.send(:build_headers, 'GeteBayOfficialTime')
+
+    # Should include OAuth2 token
+    assert_equal oauth_token, headers['X-EBAY-API-IAF-TOKEN']
+
+    # Should still include standard headers
+    assert_equal 'GeteBayOfficialTime', headers['X-EBAY-API-CALL-NAME']
+    assert_equal ebay.site_id.to_s, headers['X-EBAY-API-SITEID']
+    assert_equal 'text/xml', headers['Content-Type']
+
+    # Should include Auth'n'Auth headers (keeping conservative approach)
+    assert_equal "#{Api.dev_id};#{Api.app_id};#{Api.cert}", headers['X-EBAY-API-SESSION-CERTIFICATE']
+    assert_equal Api.dev_id, headers['X-EBAY-API-DEV-NAME']
+  end
+
+  def test_build_headers_without_oauth
+    ebay = Api.new
+    headers = ebay.send(:build_headers, 'GeteBayOfficialTime')
+
+    # Should NOT include OAuth2 token
+    assert_nil headers['X-EBAY-API-IAF-TOKEN']
+
+    # Should include Auth'n'Auth headers
+    assert_equal "#{Api.dev_id};#{Api.app_id};#{Api.cert}", headers['X-EBAY-API-SESSION-CERTIFICATE']
+  end
+
   def test_raise_on_error
     Ebay::HttpMock.respond_with(@failure)
     assert_raise(Ebay::RequestError) do
