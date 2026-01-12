@@ -1,10 +1,14 @@
 # Copy this file and paste it into a new file called config.rb
 # Then, replace the values where appropriate below and save.
 Ebay::Api.configure do |ebay|
+  # Traditional Auth'n'Auth credentials
   ebay.auth_token = 'YOUR AUTH TOKEN HERE'
   ebay.dev_id = 'YOUR DEVELOPER ID HERE'
   ebay.app_id = 'YOUR APPLICATION ID HERE'
   ebay.cert = 'YOUR CERTIFICATE HERE'
+
+  # OAuth2 token (alternative to Auth'n'Auth)
+  # ebay.rest_api_oauth_token = 'YOUR OAUTH2 TOKEN HERE'
 
   # The default environment is the production environment
   # Override by setting use_sandbox to true
