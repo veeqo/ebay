@@ -248,4 +248,33 @@ class EbayTest < Test::Unit::TestCase
     assert_includes xml, '<RequesterCredentials>'
     assert_includes xml, '<eBayAuthToken>test_auth_token</eBayAuthToken>'
   end
+
+  def test_commit_passes_oauth_token_to_request
+    oauth_token = "v^1.1#i^1#I^3#p^3#f^...r^0#t^H4s"
+    ebay = Api.new(rest_api_oauth_token: oauth_token)
+
+    Ebay::HttpMock.respond_with(@success)
+    # Call commit with a block to capture the request
+    captured_request = nil
+    ebay.send(:commit, Ebay::Requests::GeteBayOfficialTime, {}) do |request|
+      captured_request = request
+    end
+
+    # Verify OAuth token was passed to request
+    assert_equal oauth_token, captured_request.rest_api_oauth_token
+  end
+
+  def test_commit_without_oauth_token
+    ebay = Api.new  # No OAuth token
+
+    Ebay::HttpMock.respond_with(@success)
+    # Call commit with a block to capture the request
+    captured_request = nil
+    ebay.send(:commit, Ebay::Requests::GeteBayOfficialTime, {}) do |request|
+      captured_request = request
+    end
+
+    # Verify OAuth token is nil when not provided
+    assert_nil captured_request.rest_api_oauth_token
+  end
 end
