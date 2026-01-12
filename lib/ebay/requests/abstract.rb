@@ -44,7 +44,12 @@ module Ebay # :nodoc:
         @detail_levels = Array(value)
       end
       
+      attr_accessor :rest_api_oauth_token
+      
       def requester_credentials
+        # Skip RequesterCredentials when using OAuth2
+        return nil if respond_to?(:rest_api_oauth_token) && rest_api_oauth_token
+      
         if auth_token || username || password
           XMLRequesterCredentials.new(:ebay_auth_token => auth_token, :username => username, :password => password)
         end
