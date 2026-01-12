@@ -229,4 +229,23 @@ class EbayTest < Test::Unit::TestCase
 
     assert_equal expected_request_context, ebay_api.request_context
   end
+
+  def test_oauth_request_excludes_requester_credentials
+    oauth_token = "v^1.1#i^1#I^3#p^3#f^...r^0#t^H4s"
+    request = Ebay::Requests::GeteBayOfficialTime.new(rest_api_oauth_token: oauth_token)
+    xml = request.save_to_xml.to_s
+
+    # Should NOT include RequesterCredentials when using OAuth2
+    assert_not_includes xml, '<RequesterCredentials>'
+    assert_not_includes xml, '<eBayAuthToken>'
+  end
+
+  def test_auth_request_includes_requester_credentials
+    request = Ebay::Requests::GeteBayOfficialTime.new(auth_token: 'test_auth_token')
+    xml = request.save_to_xml.to_s
+
+    # Should include RequesterCredentials when using Auth'n'Auth
+    assert_includes xml, '<RequesterCredentials>'
+    assert_includes xml, '<eBayAuthToken>test_auth_token</eBayAuthToken>'
+  end
 end
