@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = Gem::Requirement.new(">= 2.5")
 
-  s.add_dependency "activesupport", ">= 4.2.0", "< 7.1"
+  s.add_dependency "activesupport", ">= 4.2.0", "< 8"
   s.add_dependency "xml-mapping", "> 0.9.1", "< 1"
   s.add_dependency "soap4r-ng", ">= 2.0.4", "< 3"
   s.add_dependency "httpclient", ">= 2.6", "< 3"
