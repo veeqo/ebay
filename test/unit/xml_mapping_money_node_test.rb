@@ -38,6 +38,19 @@ class MoneyNodeTest < Test::Unit::TestCase
     assert_equal 'CAD', item_xml.elements[1].attributes['currencyID']
   end
   
+  # Regression: with infinite_precision enabled (common in financial apps),
+  # to_f * 100 produces 1998.9999999999998 for '19.99' which leaks through
+  # as BigDecimal("1998.999...") instead of being rounded. BigDecimal parsing
+  # avoids this entirely.
+  def test_load_from_xml_float_precision
+    Money.default_infinite_precision = true
+    xml = '<Widget><Amount currencyID="USD">19.99</Amount></Widget>'
+    item = Widget.load_from_xml(REXML::Document.new(xml).root)
+    assert_equal 1999, item.amount.cents
+  ensure
+    Money.default_infinite_precision = false
+  end
+
   # Detect bug in Money library v 2.0.0
   def test_to_xml_without_default
     item = Gizmo.new
