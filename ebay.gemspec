@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency "logger-application", "~> 0.0.2"
   s.add_dependency "libxml-ruby", ">= 2.9", "< 4"
   s.add_dependency "money", "~> 6.0"
+  s.add_dependency "rexml"
 
   s.add_development_dependency "bundler"
   s.add_development_dependency "rake", ">= 10.0"
