@@ -18,13 +18,13 @@ class TimeNodeTest < Test::Unit::TestCase
 
   def test_load_from_xml
     item = Widget.load_from_xml(REXML::Document.new(@xml).root)
-    assert_instance_of Time, item.opening_time
-    assert_equal Time.parse('T21:52:37.000Z'), item.opening_time
-  end 
+    assert_instance_of ActiveSupport::TimeWithZone, item.opening_time
+    assert_equal Time.zone.parse('T21:52:37.000Z'), item.opening_time
+  end
 
   def test_save_to_xml
     widget = Widget.new
-    widget.opening_time = Time.parse('T21:52:37.000Z')
+    widget.opening_time = Time.zone.parse('T21:52:37.000Z')
     assert_equal '<widget><OpeningTime>21:52:37</OpeningTime></widget>', widget.save_to_xml.to_s
   end
 
@@ -34,4 +34,3 @@ class TimeNodeTest < Test::Unit::TestCase
     assert_raise(RuntimeError){ widget.save_to_xml }
   end
 end
-
