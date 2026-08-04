@@ -4,6 +4,7 @@ require 'stringio'
 require 'ebay/request/connection'
 require 'ebay/api_methods'
 require 'ebay/response_handler'
+require 'ebay/parse_to_hash_response'
 
 module Ebay #:nodoc:
   class EbayError < StandardError #:nodoc:
@@ -38,6 +39,22 @@ module Ebay #:nodoc:
   # In the example above the request objects is
   # Ebay::Requests::GeteBayOfficialTime and the response object is
   # Ebay::Responses::GeteBayOfficialTime
+  #
+  # == Response formats
+  # The :format option selects how a response is returned. It can be set per Api
+  # instance, or per call, in which case it wins for that call only.
+  #
+  # [:object] The default. Returns the mapped Ebay::Responses object.
+  # [:hash] Returns an Ebay::HashResponse: the payload as plain nested hashes
+  #         keyed by eBay's element names, holding only the elements the response
+  #         actually contained. Errors are still mapped, so the same exceptions
+  #         are raised. Values are Strings, with no type coercion. Intended for
+  #         calls whose responses are large enough that the mapped objects
+  #         dominate memory. See Ebay::ParseToHashResponse.
+  # [:raw] Returns the response body as a String.
+  #
+  #   ebay.get_seller_events(params)                        # => mapped objects
+  #   ebay.get_seller_events(params, :format => :hash)      # => Ebay::HashResponse
   #
   # == Official Input / Output Reference
   # The official input / output reference provided by eBay is a good way to get familiar
@@ -310,17 +327,30 @@ module Ebay #:nodoc:
     def parse(content, format)
       case format
       when :object
-        xml = REXML::Document.new(content)
-        # Fixes the wrong case of API returned by eBay
-        fix_root_element_name(xml)
-        result = XML::Mapping.load_object_from_xml(xml.root)
-        Ebay::ResponseHandler.new(result).call
+        result = load_object(content)
+      when :hash
+        # Plain hashes instead of mapped objects, for calls whose responses are
+        # large enough that the mapped objects dominate memory. Errors are still
+        # mapped, so the same exceptions are raised. See Ebay::ParseToHashResponse.
+        result = load_hash(content)
       when :raw
         result = content
       else
         raise ArgumentError, "Unknown response format '#{format}' requested"
       end
       result
+    end
+
+    def load_object(content)
+      xml = REXML::Document.new(content)
+      # Fixes the wrong case of API returned by eBay
+      fix_root_element_name(xml)
+      result = XML::Mapping.load_object_from_xml(xml.root)
+      Ebay::ResponseHandler.new(result).call
+    end
+
+    def load_hash(content)
+      Ebay::ResponseHandler.new(Ebay::ParseToHashResponse.call(content)).call
     end
 
     def fix_root_element_name(xml)

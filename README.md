@@ -50,6 +50,59 @@ And then execute:
 
     $ bundle
 
+## Response formats
+
+The `:format` option selects how a response comes back. It can be set on the
+`Ebay::Api` instance, or per call, where it wins for that call only.
+
+```ruby
+api = Ebay::Api.new                                      # defaults to :object
+api.get_seller_events(params)                            # => Ebay::Responses::GetSellerEvents
+api.get_seller_events(params, format: :raw)              # => String
+api.get_seller_events(params, format: :hash)             # => Ebay::HashResponse
+```
+
+- `:object` -- the default; returns the mapped `Ebay::Responses` object.
+- `:raw` -- returns the response body as a `String`, useful for calls with an
+  extremely large response such as `GetCategories`.
+- `:hash` -- returns an `Ebay::HashResponse` whose payload is plain nested
+  hashes, holding only the elements the response actually contained.
+
+### Why `:hash`
+
+`xml-mapping` treats an optional node as `default_value => nil` and assigns that
+default eagerly, so a response object carries an instance variable per node no
+matter how little the XML contained. It's useful for the cases when only handful of
+attributes are requested, so the parser doesn't pollute the response object
+with null-objects, giving significant win in memory consumption.
+
+Errors are still parsed with the real `Ebay::Types::Error` mapping, so a `:hash`
+call raises exactly the same `Ebay::RequestError` / `Ebay::ItemNotAccessible` /
+`Ebay::RequestLimitExceeded` as `:object`, and `HashResponse` answers the same
+`#success?` / `#failure?` / `#errors?` predicates.
+
+The payload is read with `#[]` (or `#body`), keyed by eBay's element names:
+
+```ruby
+response = api.get_seller_events(params, format: :hash)
+Array(response['ItemArray']['Item']).each do |item|
+  item['ItemID']
+  item['SellingStatus']['QuantitySold']
+  item.dig('Variations', 'Variation')
+end
+```
+
+Two things to keep in mind, because the hash mirrors the XML rather than the
+mapping:
+
+- **No type coercion.** Every value is a `String` (or `nil`), so a `Quantity` is
+  `"2"` rather than `2` and a `Timestamp` is a `String` rather than a `Time`.
+- **Arity follows the document.** A child element is an `Array` only when it
+  appears more than once in its parent, so a response with a single `<Item>`
+  exposes a `Hash`. Wrap list access in `Array(...)` to handle both. An element
+  that carries attributes (such as a monetary value's `currencyID`) becomes a
+  hash with its text under the `"__text"` key.
+
 ## Request events
 
 The gem fires ASN event on every request to eBay API.
