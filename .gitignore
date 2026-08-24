@@ -6,3 +6,4 @@ examples/run_ruby.sh
 .bundle
 Gemfile.lock
 gemfiles/*.lock
+.idea/
