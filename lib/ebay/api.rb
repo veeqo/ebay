@@ -49,6 +49,7 @@ module Ebay #:nodoc:
     include ApiMethods
     XmlNs = 'urn:ebay:apis:eBLBaseComponents'
     DEFAULT_ENCODING = 'UTF-8'
+    XML_FORBIDDEN_CONTROL_CHARACTERS = "\x00-\x08\x0B\x0C\x0E-\x1F"
     DEFAULT_REQUEST_EVENT_NAME = 'ebay_trading_api.request.details'
 
     cattr_accessor :use_sandbox, :sandbox_url, :production_url, :site_id, :services
@@ -193,7 +194,7 @@ module Ebay #:nodoc:
 
       response = connection.post(path, body, headers, request_env: request_event_env)
 
-      parse(decompress(response), format)
+      parse(without_xml_forbidden_characters(decompress(response)), format)
     end
 
     def prepare_request_event_env(request, api_version)
@@ -297,6 +298,10 @@ module Ebay #:nodoc:
 
       encoding = get_encoding(response)
       content.force_encoding(encoding)
+    end
+
+    def without_xml_forbidden_characters(content)
+      content.tr(XML_FORBIDDEN_CONTROL_CHARACTERS, ' ')
     end
 
     def get_encoding(response)
