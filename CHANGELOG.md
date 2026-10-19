@@ -1,6 +1,11 @@
 Changelog
 =========
 
+Version 1.0.2 (October 19, 2026)
+--------------------------------
+
+* Replace control characters that XML 1.0 forbids (e.g. BEL in a buyer address) with spaces before parsing a response. Before, REXML rejected the whole response.
+
 * Still return the stylesheet in XslFile even when the regex doesn't match
 * Update to schema version 653
 * Update to schema version 637

@@ -210,6 +210,32 @@ class EbayTest < Test::Unit::TestCase
     assert_equal 'UTF-8', order.shipping_address.country_name.encoding.to_s
   end
 
+  def test_xml_forbidden_characters_are_replaced_with_spaces
+    Ebay::HttpMock.respond_with parse_response(response_with_xml_forbidden_character)
+    order = @ebay.get_orders(order_ids: ['00000000000-11111111111']).orders.first
+
+    assert_equal 'Jüss DÖe', order.shipping_address.name
+  end
+
+  def test_xml_forbidden_characters_are_replaced_with_spaces_in_gzipped_response
+    compressed = Zlib.gzip(response_with_xml_forbidden_character)
+    Ebay::HttpMock.respond_with parse_response(compressed, headers: { 'Content-Encoding' => 'gzip' })
+    order = @ebay.get_orders(order_ids: ['00000000000-11111111111']).orders.first
+
+    assert_equal 'Jüss DÖe', order.shipping_address.name
+  end
+
+  def test_xml_forbidden_characters_are_replaced_with_spaces_in_raw_response
+    Ebay::HttpMock.respond_with parse_response(response_with_xml_forbidden_character)
+    raw_response = @ebay.get_orders(order_ids: ['00000000000-11111111111'], format: :raw)
+
+    assert_includes raw_response, '<Name>Jüss DÖe</Name>'
+  end
+
+  def response_with_xml_forbidden_character
+    load_response(:local_lang_chars).sub('<Name>Jüss DÖe</Name>', "<Name>Jüss\aDÖe</Name>")
+  end
+
   def test_unknown_request_raises_no_method_error
     assert_raise(NoMethodError) do
       @ebay.get_sushi
