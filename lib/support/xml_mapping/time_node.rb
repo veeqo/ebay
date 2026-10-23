@@ -5,7 +5,7 @@ class TimeNode < XML::Mapping::SingleAttributeNode
     @path = XML::XXPath.new(path)
   end
   def extract_attr_value(xml) # :nodoc:
-    Time.parse(default_when_xpath_err{ @path.first(xml).text })
+    Time.zone.parse(default_when_xpath_err{ @path.first(xml).text })
   end
   def set_attr_value(xml, value) # :nodoc:
     raise "Not a Time object: #{value}" unless value.is_a?(Time)

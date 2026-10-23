@@ -16,6 +16,9 @@ end
 
 require 'active_support'
 require 'active_support/core_ext'
+require 'active_support/time_with_zone'
+
+Time.zone_default = Time.find_zone!('UTC')
 
 # Include the additional XML::Mapping node types
 require 'support/xml_mapping'

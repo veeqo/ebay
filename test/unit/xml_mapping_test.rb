@@ -19,10 +19,9 @@ class EbayMappingTest < Test::Unit::TestCase
 	  ack = 'Success'
 	  version = '467'
 	  build = 'e467_core_Bundled_3145691_R1'
-    assert_equal Time.parse(timestamp), response.timestamp
+    assert_equal Time.zone.parse(timestamp), response.timestamp
     assert_equal ack, response.ack
     assert_equal version, response.version
     assert_equal build, response.build
 	end
 end
-
